@@ -1184,6 +1184,9 @@
     .book-early { text-align: center; margin: 2rem auto 0; max-width: 36rem; font-size: .95rem; color: var(--text-dark-muted); font-style: italic; }
     .timeline-photo--tall { max-width: 320px; }
     .timeline-photo--tall img { aspect-ratio: 3/4; object-position: center 60%; }
+    .rsvp-thanks { max-width: 520px; margin: 2rem auto 0; padding: 2rem; border: 1px solid rgba(232,184,109,.35); border-radius: 16px; text-align: center; }
+    .rsvp-thanks .script { font-family: var(--font-script); font-size: 2.4rem; color: var(--gold); display: block; margin-bottom: .5rem; }
+    .rsvp-thanks p { color: var(--text-light); }
   </style>
 </head>
 
@@ -1646,14 +1649,16 @@
         Merci de confirmer votre présence <strong style="color: var(--gold);">individuellement</strong> avant le <strong style="color: var(--gold);">1er mai 2027</strong> pour nous aider à organiser au mieux ce beau week-end.
       </p>
 
-      <!-- FormSubmit.co — free, no registration. Replace EMAIL below with Joyce's real email -->
-      <form class="rsvp-form reveal" action="https://formsubmit.co/YOUR_EMAIL_HERE" method="POST">
+      <!-- FormSubmit.co → joycedjian@gmail.com (cc ravinderupem@gmail.com) -->
+      <form class="rsvp-form reveal" id="rsvpForm" action="https://formsubmit.co/joycedjian@gmail.com" method="POST">
+        <input type="hidden" name="_cc" value="ravinderupem@gmail.com">
+        <input type="hidden" name="_template" value="table">
         <!-- Honeypot anti-spam -->
         <input type="text" name="_honey" style="display:none">
         <!-- Disable captcha page -->
         <input type="hidden" name="_captcha" value="false">
         <!-- Success redirect -->
-        <input type="hidden" name="_next" value="">
+        <input type="hidden" name="_next" value="https://joyceetradvin.github.io/#merci">
         <!-- Subject -->
         <input type="hidden" name="_subject" value="RSVP — Célébration Joyce & Radvin">
 
@@ -1848,6 +1853,18 @@
         if (e.isIntersecting) { const p = v.play(); if (p) p.catch(() => {}); } else v.pause();
       }), { threshold: 0.15 });
       vids.forEach(v => io.observe(v));
+    })();
+
+    // ── RSVP thank-you after FormSubmit redirect ──
+    (function () {
+      if (location.hash !== '#merci') return;
+      const f = document.getElementById('rsvpForm');
+      if (!f) return;
+      const d = document.createElement('div');
+      d.className = 'rsvp-thanks';
+      d.innerHTML = '<span class="script">Merci !</span><p>Votre réponse a bien été envoyée à Joyce &amp; Radvin. À très vite à Cassis.</p>';
+      f.replaceWith(d);
+      document.getElementById('rsvp').scrollIntoView();
     })();
   </script>
 
