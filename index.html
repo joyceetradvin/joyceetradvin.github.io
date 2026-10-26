@@ -1088,7 +1088,7 @@
     /* ── Galerie ── */
     .gallery-section { padding-block: 6rem; text-align: center; }
     .gallery-grid { columns: 3 260px; column-gap: 1rem; margin-top: 3rem; }
-    .g-item { position: relative; break-inside: avoid; margin: 0 0 1rem; border-radius: 14px; overflow: hidden; cursor: zoom-in; background: var(--navy); display: block; width: 100%; padding: 0; border: 0; }
+    .g-item { position: relative; break-inside: avoid; margin: 0 0 1rem; border-radius: 14px; overflow: hidden; cursor: zoom-in; background: #EADFCF; display: block; width: 100%; padding: 0; border: 0; }
     .g-item img { width: 100%; display: block; transition: transform .8s cubic-bezier(.2,.7,.2,1), filter .5s; }
     .g-item:hover img, .g-item:focus-visible img { transform: scale(1.05); filter: brightness(.85); }
     .g-item figcaption { position: absolute; inset: auto 0 0 0; padding: 2.2rem 1rem .9rem; color: var(--white); font-family: var(--font-serif); font-size: 1.1rem; font-style: italic; text-align: left; background: linear-gradient(transparent, rgba(6,30,47,.75)); opacity: 0; transform: translateY(8px); transition: .4s; }
@@ -1127,6 +1127,49 @@
     .hero-dots span { width: 22px; height: 2px; background: rgba(253,251,247,.35); transition: background .6s, width .6s; }
     .hero-dots span.on { background: var(--gold); width: 36px; }
     @media (prefers-reduced-motion: reduce) { .hero-slide.is-active { animation: none; } }
+
+    /* ═══ LIGHT THEME OVERRIDES (sand sections, light nav, softer hero) ═══ */
+    :root { --sand: #FAF4EA; --ink: #0B2A3D; --line: rgba(196,154,92,.25); }
+    .section-sand { background: var(--sand); color: var(--text-dark); }
+    .section-sand .eyebrow { color: var(--antique); }
+    .section-sand .section-heading { color: var(--ink); }
+    .section-sand .section-sub { color: var(--text-dark-muted); }
+    .section-sand .cassis-card, .section-sand .programme-card, .section-sand .team-card, .section-sand .travel-card {
+      background: #fff; border: 1px solid var(--line); box-shadow: 0 6px 28px rgba(11,42,61,.06);
+    }
+    .section-sand .cassis-card h3, .section-sand .travel-card h3, .section-sand .programme-day,
+    .section-sand .team-name, .section-sand .accommodation-title { color: var(--ink); }
+    .section-sand .cassis-card p, .section-sand .travel-card p, .section-sand .programme-desc,
+    .section-sand .team-desc { color: var(--text-dark-muted); }
+    .section-sand .programme-date, .section-sand .programme-time, .section-sand .team-badge,
+    .section-sand .team-group-title, .section-sand .card-icon, .section-sand .programme-desc .ico { color: var(--antique); }
+    .section-sand .team-badge { background: rgba(196,154,92,.12); }
+    .section-sand .programme-list { border-top-color: var(--line); }
+    .section-sand .travel-card .card-icon { background: rgba(196,154,92,.08); border-color: var(--line); }
+    .section-sand .team-avatar { background: rgba(196,154,92,.12); }
+    .section-sand .team-monogram { color: var(--antique); }
+    .section-sand .btn-gold { color: var(--ink); border-color: var(--antique); }
+    .section-sand .btn-gold:hover { background: var(--antique); color: #fff; }
+    .countdown-section { background: var(--white); border-bottom: 1px solid var(--line); }
+    .countdown-number { color: var(--ink); }
+    .countdown-label { color: var(--antique); }
+    .countdown-sep, .countdown .sep { color: var(--antique); }
+    /* light navigation once scrolled */
+    nav.scrolled { background: rgba(253,251,247,.94); box-shadow: 0 2px 20px rgba(11,42,61,.08); }
+    nav.scrolled .nav-links a { color: rgba(11,42,61,.72); }
+    nav.scrolled .nav-links a:hover, nav.scrolled .nav-links a.active { color: var(--antique); }
+    nav.scrolled .nav-logo { color: var(--antique); }
+    nav.scrolled .nav-toggle span { background: var(--ink); }
+    nav.scrolled .nav-links a::after { background: var(--antique); }
+    @media (max-width: 768px) {
+      .nav-links { background: var(--white); }
+      .nav-links a, nav.scrolled .nav-links a { color: var(--ink); }
+      .nav-toggle.open span { background: var(--ink); }
+    }
+    /* softer, brighter hero */
+    .hero-shade { background: linear-gradient(180deg, rgba(6,30,47,.28) 0%, rgba(6,30,47,.08) 35%, rgba(6,30,47,.18) 65%, rgba(6,30,47,.62) 100%); }
+    .hero::before { opacity: .35; }
+    .hero h1, .hero .hero-names, .hero .hero-date, .hero .hero-label { text-shadow: 0 2px 18px rgba(6,30,47,.45); }
   </style>
 </head>
 
@@ -1204,11 +1247,11 @@
   </div>
 
   <!-- ═══════════════ CASSIS INTRO ═══════════════ -->
-  <section class="section-dark cassis-section" id="cassis">
+  <section class="section-sand cassis-section" id="cassis">
     <div class="container">
       <p class="eyebrow reveal">Cassis, Provence</p>
-      <h2 class="section-heading reveal" style="color: var(--white);">Entre mer et vignes</h2>
-      <p class="section-sub reveal" style="color: var(--text-light);">
+      <h2 class="section-heading reveal">Entre mer et vignes</h2>
+      <p class="section-sub reveal">
         Niché entre falaises ocre et Méditerranée, Cassis est notre coup de cœur. C'est ici, au Domaine de Canaille, que nous avons choisi de célébrer avec ceux qu'on aime.
       </p>
       <div class="cassis-hero-img reveal">
@@ -1444,11 +1487,11 @@
   </div>
 
   <!-- ═══════════════ PROGRAMME ═══════════════ -->
-  <section class="section-dark" id="weekend">
+  <section class="section-sand" id="weekend">
     <div class="container text-center">
       <p class="eyebrow reveal">Le Programme</p>
-      <h2 class="section-heading reveal" style="color: var(--white);">Un week-end de fête</h2>
-      <p class="section-sub reveal" style="margin: 0 auto; color: var(--text-light);">
+      <h2 class="section-heading reveal">Un week-end de fête</h2>
+      <p class="section-sub reveal" style="margin: 0 auto;">
         Deux jours de célébration au Domaine de Canaille — entre cérémonie, danse et farniente au bord de la piscine.
       </p>
 
@@ -1521,11 +1564,11 @@
   </section>
 
   <!-- ═══════════════ NOS PROCHES ═══════════════ -->
-  <section class="section-dark team-section" id="team">
+  <section class="section-sand team-section" id="team">
     <div class="container">
       <p class="eyebrow reveal">Nos Proches &amp; Témoins</p>
-      <h2 class="section-heading reveal" style="color: var(--white);">Les personnes qui comptent</h2>
-      <p class="section-sub reveal" style="margin: 0 auto; color: var(--text-light);">
+      <h2 class="section-heading reveal">Les personnes qui comptent</h2>
+      <p class="section-sub reveal" style="margin: 0 auto;">
         Ceux qui nous accompagnent dans cette belle aventure — notre famille de cœur.
       </p>
 
@@ -1618,11 +1661,11 @@
   </section>
 
   <!-- ═══════════════ ACCÈS & SÉJOUR ═══════════════ -->
-  <section class="section-dark travel-section" id="travel">
+  <section class="section-sand travel-section" id="travel">
     <div class="container">
       <p class="eyebrow reveal">Accès &amp; Séjour</p>
-      <h2 class="section-heading reveal" style="color: var(--white);">Comment venir &amp; où dormir</h2>
-      <p class="section-sub reveal" style="margin: 0 auto; color: var(--text-light);">
+      <h2 class="section-heading reveal">Comment venir &amp; où dormir</h2>
+      <p class="section-sub reveal" style="margin: 0 auto;">
         Cassis est facilement accessible en train ou en voiture. Voici toutes les infos pratiques.
       </p>
 
