@@ -1870,22 +1870,24 @@
 
       f.addEventListener('submit', async (e) => {
         e.preventDefault();
-        if (f._honey && f._honey.value) return; // bot
+        if (f.elements.namedItem('_honey')?.value) return; // bot
         const btn = f.querySelector('.btn-submit');
         const label = btn.textContent;
         btn.disabled = true; btn.textContent = 'Envoi en cours…';
         let err = f.querySelector('.rsvp-error');
         if (err) err.remove();
 
-        const sel = f.attendance;
+        const el = (n) => f.elements.namedItem(n);
+        const sel = el('attendance');
+        const nom = el('name').value.trim();
         const data = {
-          'Nom': f.name.value.trim(),
-          'Email': f.email.value.trim(),
+          'Nom': nom,
+          'Email': el('email').value.trim(),
           'Présence': sel.options[sel.selectedIndex].text,
-          'Message': f.message.value.trim() || '—',
-          _replyto: f.email.value.trim(),
+          'Message': el('message').value.trim() || '—',
+          _replyto: el('email').value.trim(),
           _cc: 'ravinderupem@gmail.com',
-          _subject: 'RSVP — ' + f.name.value.trim() + ' — ' + sel.options[sel.selectedIndex].text,
+          _subject: 'RSVP — ' + nom + ' — ' + sel.options[sel.selectedIndex].text,
           _template: 'table',
           _captcha: 'false'
         };
