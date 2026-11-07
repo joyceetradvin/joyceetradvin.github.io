@@ -1855,16 +1855,60 @@
       vids.forEach(v => io.observe(v));
     })();
 
-    // ── RSVP thank-you after FormSubmit redirect ──
+    // ── RSVP: send via FormSubmit AJAX → joycedjian@gmail.com + cc ravinderupem@gmail.com ──
     (function () {
-      if (location.hash !== '#merci') return;
       const f = document.getElementById('rsvpForm');
       if (!f) return;
-      const d = document.createElement('div');
-      d.className = 'rsvp-thanks';
-      d.innerHTML = '<span class="script">Merci !</span><p>Votre réponse a bien été envoyée à Joyce &amp; Radvin. À très vite à Cassis.</p>';
-      f.replaceWith(d);
-      document.getElementById('rsvp').scrollIntoView();
+      const showThanks = () => {
+        const d = document.createElement('div');
+        d.className = 'rsvp-thanks';
+        d.innerHTML = '<span class="script">Merci !</span><p>Votre réponse a bien été envoyée à Joyce &amp; Radvin. À très vite à Cassis.</p>';
+        f.replaceWith(d);
+        document.getElementById('rsvp').scrollIntoView({ behavior: 'smooth' });
+      };
+      if (location.hash === '#merci') { showThanks(); return; }
+
+      f.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (f._honey && f._honey.value) return; // bot
+        const btn = f.querySelector('.btn-submit');
+        const label = btn.textContent;
+        btn.disabled = true; btn.textContent = 'Envoi en cours…';
+        let err = f.querySelector('.rsvp-error');
+        if (err) err.remove();
+
+        const sel = f.attendance;
+        const data = {
+          'Nom': f.name.value.trim(),
+          'Email': f.email.value.trim(),
+          'Présence': sel.options[sel.selectedIndex].text,
+          'Message': f.message.value.trim() || '—',
+          _replyto: f.email.value.trim(),
+          _cc: 'ravinderupem@gmail.com',
+          _subject: 'RSVP — ' + f.name.value.trim() + ' — ' + sel.options[sel.selectedIndex].text,
+          _template: 'table',
+          _captcha: 'false'
+        };
+
+        try {
+          const r = await fetch('https://formsubmit.co/ajax/joycedjian@gmail.com', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify(data)
+          });
+          const j = await r.json().catch(() => ({}));
+          if (r.ok && String(j.success) === 'true') { showThanks(); return; }
+          throw new Error(j.message || ('HTTP ' + r.status));
+        } catch (ex) {
+          console.error('RSVP error:', ex);
+          btn.disabled = false; btn.textContent = label;
+          err = document.createElement('p');
+          err.className = 'rsvp-error';
+          err.style.cssText = 'color:#f2b8b5;margin-top:1rem;text-align:center';
+          err.innerHTML = 'Oups, l’envoi n’a pas fonctionné. Réessayez dans un instant ou écrivez-nous à <a style="color:var(--gold)" href="mailto:joycedjian@gmail.com,ravinderupem@gmail.com?subject=RSVP">joycedjian@gmail.com</a>.';
+          f.appendChild(err);
+        }
+      });
     })();
   </script>
 
